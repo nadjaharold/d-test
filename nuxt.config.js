@@ -1,3 +1,6 @@
+require('dotenv').config()
+const { RESAS_KEY, API_URL } = process.env
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -34,7 +37,13 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [
+    {
+      src: '~/plugins/axios',
+      ssr: false,
+    },
+    { src: '~/plugins/vue-highcharts.js', ssr: false },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -47,10 +56,21 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios'],
+  styleResources: {
+    scss: [
+      '@/assets/base/_common.scss',
+      '@/assets/base/_mixin.scss',
+      '@/assets/base/_setting.scss',
+    ],
+  },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
+  env: {
+    RESAS_KEY,
+    API_URL,
+  },
 }
